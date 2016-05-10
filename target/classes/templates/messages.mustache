@@ -7,13 +7,21 @@
 </form>
 <br>
 
+{{^user}}
+    <p>AFEFAWDA</p>
+{{/user}}
+
 {{#user}}
     <p>Messages by {{name}}!</p>
 
+    {{^userMessage}}
+        <p>NO MESSAGES</p>
+    {{/userMessage}}
+
     <ol>
-        {{#messages}}
-            <li>{{text}}</li>
-        {{/messages}}
+        {{#userMessage}}
+            <li>{{messageText}}</li>
+        {{/userMessage}}
     </ol>
 
 {{/user}}

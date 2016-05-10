@@ -1,33 +1,52 @@
-import spark.Spark;
+import com.sun.org.apache.xpath.internal.operations.Mod;
+import spark.ModelAndView;
+import spark.Session;
+import spark.*;
 import spark.template.mustache.MustacheTemplateEngine;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import static spark.Spark.halt;
+import static spark.route.HttpMethod.get;
+
 public class Main {
+    static User user;
 
     public static void main(String[] args) {
 
-        // this creates an end-point for the webroot
+        Spark.init();
+
+        // TODO: this creates an end-point for the webroot
         Spark.get(
                 "/",
                 (request, response) -> {
-                    // create a HashMap to hold our model
 
-                    // check if the session contains an element with a key "user"
+                    // TODO: create a HashMap to hold our model
+                    HashMap hashMap = new HashMap();
 
-                        // IF SO:
-                        // get the user from the session
+                    // TODO: check if the session contains an element with a key "user"
+                    //HSN: change this to User user = ... .attributes.contains("user");
+                    if (request.session().attributes().contains("user")) {
 
-                        // place the user into the model HashMap
-
-
-                        // return a ModelAndView for the messages template
-
-
-
-                        // IF NOT:
-                        // return a ModelAndView for the index template
+                        // TODO: IF SO:
+                        // TODO: get the user from the session
+                        // TODO: place the user into the model HashMap
+                        hashMap.put("user", request.session().attribute("user"));
 
 
+                        // TODO: return a ModelAndView for the messages template
+                        return new ModelAndView(hashMap, "messages.mustache");
+
+                    }
+
+                    // TODO: IF NOT:
+                    // TODO: return a ModelAndView for the index template
+                    else {
+                        return new ModelAndView(hashMap, "index.mustache");
+                    }
                 },
+
                 new MustacheTemplateEngine()
         );
 
@@ -35,40 +54,54 @@ public class Main {
                 "/create-user",
                 (request, response) -> {
 
-                    // get the loginName value from the request's queryParams
+                    // TODO: get the loginName value from the request's queryParams
+                    //String name = request.queryParams("loginName");
+                    // TODO: create a new instance of a User for the loginName
+                    //User user = new User(name);
+                    // TODO: Add the user into the session
+                    User user = new User(request.queryParams("loginName"));
+                    request.session().attribute("user", user);
 
-                    // create a new instance of a User for the loginName
+                    // TODO: Redirect to /
+                    response.redirect("/");
 
-                    // Add the user into the session
+                    // TODO: halt the request
+                    halt();
 
-                    // Redirect to /
-
-                    // halt the request
-
-                    // return an empty string
-
+                    // TODO: return an empty string
+                    return "";
                 }
         );
 
         Spark.post(
                 "/create-message",
                 (request, response) -> {
-                    // get the user from the session
 
-                    // get the submitted message text from the request's queryParams
+                    // TODO: get the user from the session
+                    User user = request.session().attribute("user");
 
-                    // Create a new message for submitted message text
+                    // TODO: get the submitted message text from the request's queryParams
+                    String submittedMessage = request.queryParams("message");
 
-                    // add the new message to the user's array of messages
+                    // TODO: Create a new message for submitted message text
+                    Message newMessage = new Message(submittedMessage);
 
-                    // redirect to the webroot, /
+                    // TODO: add the new message to the user's array of messages
+                    //HSN: User class already has its own Array List for messages, use that one here instead
+                    //newMessage.setMessageText(submittedMessage);
+                    user.getUserMessage().add(newMessage);
 
-                    // halt this request
+                    // TODO: redirect to the webroot, /
+                    response.redirect("/");
 
-                    // return an empty string
+                    // TODO: halt this request
+                    halt();
+                    // TODO: return an empty string
 
+                    return "";
                 }
         );
+
     }
 
 

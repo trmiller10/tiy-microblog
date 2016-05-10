@@ -1,27 +1,44 @@
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
-
 public class User {
 
-    // create a name property
+    // TODO: create a name property
+    public String name;
+
+    // TODO: create a message property. This should be an ArrayList that holds Message objects.
+    public ArrayList<Message> userMessage = new ArrayList<>();
+
+    // TODO: Create a constructor that accepts one argument, the user's name
+    public User(String name){
 
 
-    // create a message property. This should be an ArrayList that holds Message objects.
+        this.name = name;
+    }
 
+    // TODO: create a getter for name
+    public String getName(){
 
-    // Create a constructor that accepts one argument, the user's name
+        return name;
+    }
 
+    // TODO: create a setter for name
+    public void setName(String name) {
 
-    // create a getter for name
+        this.name = name;
+    }
 
+    // TODO: create a getter for messages
+    public ArrayList getUserMessage(){
 
-    // create a setter for name
+        return userMessage;
+    }
 
+    // TODO: create a setter for messages
+    public void setUserMessage(ArrayList<Message> userMessage) {
 
-    // create a getter for messages
+        this.userMessage = userMessage;
+    }
 
-
-    // create a setter for messages
 }
+
